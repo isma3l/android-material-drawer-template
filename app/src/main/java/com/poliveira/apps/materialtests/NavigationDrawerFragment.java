@@ -144,7 +144,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         List<NavigationItem> items = new ArrayList<NavigationItem>();
         items.add(new NavigationItem("item 1", getResources().getDrawable(R.drawable.ic_menu_check)));
         items.add(new NavigationItem("item 2", getResources().getDrawable(R.drawable.ic_menu_check)));
-        items.add(new NavigationItem("item 3", getResources().getDrawable(R.drawable.ic_menu_check)));
+        items.add(new NavigationItem("item 3", getResources().getDrawable(R.drawable.ic_launcher)));
         return items;
     }
 

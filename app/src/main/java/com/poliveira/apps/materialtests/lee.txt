@@ -1,0 +1,74 @@
+Explicacion:
+
+Empezando por la fila del menu desplegable, cada fila consta de 2 views: una imagen y un texto, dicha representacion se da por el layout: drawer_row.
+
+Sin embargo al observar el layout solo se ve un textView, esto se explica al final:
+***************************Compound Drawables***********************
+leerlo antes de continuar.
+
+Resumen: Parece que el mismo textView puede contener a la imagen asi que si solo es un par imagen y texto, usar esto para mayor eficiencia.
+
+------
+
+-drawer_row se asocia con la clase NavigationItem quien representa a una fila,
+por lo tanto tiene un textview y un drawer como atributos.
+Los NavigationItem son creados en el metodo: getMenu() de la clase
+NavigationDrawerFragment.
+
+Por lo tanto si se quiere cambiar esto, por ejemplo colocar 2 imagenes y texto,
+ se debe modificar el constructor de la clase NavigationItem y tambien el metodo
+getMenu() de la clase NavigationDrawerFragment.
+
+Ademas como se usa el patron ViewHolder:::
+-Debera modificarse el metodo onBindViewHolder() de la clase NavigationDrawerAdapter
+que es donde se llenan los ViewHolder.
+-Y tambien habra que cambiar los atributos de la clase publica interna ViewHolder
+que esta dentro de NavigationDrawerAdapter.
+
+
+
+
+
+
+***************************Compound Drawables***********************
+
+Compound Drawables: Consiste en simplificar un layout cuando éste conste de un ImageView y un TextView. Suele ser frecuente encontrarse en una lista de elementos una imagen junto a un texto. Algo así:
+
+<LinearLayout
+    <!--....--> >
+    <ImageView....
+<!--....--> />
+    <TextView...
+<!--....--> />
+</LinearLayout>
+
+
+Es posible simplificar el layout eliminando la imagen y usarla dentro del elemento TextView como **Compound Drawable**.
+
+Como es frecuente en Android, hay dos formas de hacer esto, mediante código o mediante XML. Empecemos con el primero:
+
+1- El método setCompoundDrawableWithIntrinsicBounds(), codeando se encarga de unir un ImageView a un TextView:
+
+TextView tv = (TextView) findViewById( R.id.textView );
+tv.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_launcher, 0, 0, 0 );
+tv.setCompoundDrawablePadding(10);
+
+Los cuatro parámetros que acepta este método son las imágenes a adjuntar al texto, se puede adjuntar a la izquierda, arriba, derecha o abajo. Si solo interesa fijar una imagen a la izquierda del texto, basta con pasar un 0 a los 3 parámetros restantes.
+
+2- Es posible realizar el proceso anterior mediante XML, en lugar de java:
+
+<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:text="@string/text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+Cos los atributos (android:drawableLeft, y android:drawablePadding) se logra el mismo resultado.
+
+Con esta pequeña optimización estamos reduciendo el layout de dos a un View, puede parecer poco, pero si usamos esto en un listView con 10 filas por ejemplo, se pintará más rápido y el desplazamiento por la lista será más suave.
+
+
+

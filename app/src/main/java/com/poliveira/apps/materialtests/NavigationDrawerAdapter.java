@@ -13,6 +13,13 @@ import java.util.List;
 /**
  * Created by poliveira on 24/10/2014.
  */
+/*
+Esta clase se encarga de crear las Views necesarias para cada elemento del RecyclerView,
+ además, está muy unida al ViewHolder, teniendo que ser indicado en la declaración de la
+ clase, muchos pensaréis que esto no es nuevo, que Google ya aconsejara este patrón tiempo
+ atrás, esta vez fuerza a utilizarlo, teniendo que ser indicado en la implementación del Adapter,
+  un paso adelante, sin duda.
+ */
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.ViewHolder> {
 
     private List<NavigationItem> mData;
@@ -68,6 +75,9 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         return viewholder;
     }
 
+    /*
+    El método onBindViewHolder(ViewHolder viewholder, int position) se usa para configurar el contenido de las Views
+     */
     @Override
     public void onBindViewHolder(NavigationDrawerAdapter.ViewHolder viewHolder, final int i) {
         viewHolder.textView.setText(mData.get(i).getText());
